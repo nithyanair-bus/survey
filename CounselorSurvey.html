@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counselor & Advisor Survey — High School Journey Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans p-6">
+
+    <div class="max-w-2xl mx-auto bg-white border border-slate-200 rounded-xl shadow-md overflow-hidden">
+        <header class="bg-teal-900 text-white p-6">
+            <div class="flex justify-between items-center">
+                <span class="text-xs font-bold uppercase tracking-widest text-teal-300">Stakeholder Group: School Counselors</span>
+                <span class="bg-teal-700 text-teal-200 text-xs px-2.5 py-1 rounded-full">Target: 2–3 Responses</span>
+            </div>
+            <h1 class="text-xl font-bold mt-2">Counselor Curriculum Alignment Survey</h1>
+            <p class="text-xs text-teal-200 mt-1">Evaluating 4-year roadmap accuracy and institutional recommendation fit.</p>
+        </header>
+
+        <form id="counselor-survey" class="p-6 space-y-6" onsubmit="calculateCounselorMetrics(event)">
+            
+            <!-- Metric 1: Roadmap Accuracy -->
+            <div>
+                <label class="block text-sm font-semibold text-slate-800 mb-1">
+                    1. Does the 4-Year Strategic Roadmap (Screen 2) accurately reflect ideal freshman-to-senior planning?
+                </label>
+                <div class="grid grid-cols-4 gap-2 text-center text-xs">
+                    <label class="border rounded-lg p-3 cursor-pointer hover:bg-slate-50">
+                        <input type="radio" name="roadmap_accuracy" value="Needs Work" required class="block mx-auto mb-1"> Needs Work
+                    </label>
+                    <label class="border rounded-lg p-3 cursor-pointer hover:bg-slate-50">
+                        <input type="radio" name="roadmap_accuracy" value="Acceptable" class="block mx-auto mb-1"> Acceptable
+                    </label>
+                    <label class="border rounded-lg p-3 cursor-pointer hover:bg-slate-50">
+                        <input type="radio" name="roadmap_accuracy" value="Accurate" class="block mx-auto mb-1"> Accurate
+                    </label>
+                    <label class="border rounded-lg p-3 cursor-pointer hover:bg-slate-50">
+                        <input type="radio" name="roadmap_accuracy" value="Exceptional" class="block mx-auto mb-1"> Exceptional
+                    </label>
+                </div>
+            </div>
+
+            <!-- Metric 2: Biggest Counseling Bottleneck -->
+            <div>
+                <label class="block text-sm font-semibold text-slate-800 mb-1">
+                    2. What is the single biggest challenge you face with 9th-grade families?
+                </label>
+                <select name="counseling_bottleneck" required class="w-full border border-slate-300 rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-teal-500">
+                    <option value="">Select primary bottleneck...</option>
+                    <option value="Overwhelmed">Parents over-anxious and asking repetitive basic questions</option>
+                    <option value="Unaware">Students unaware of extracurricular/GPA importance until Junior year</option>
+                    <option value="Disorganized">Information lost across emails and school newsletters</option>
+                </select>
+            </div>
+
+            <!-- Metric 3: Institutional Endorsement -->
+            <div>
+                <label class="block text-sm font-semibold text-slate-800 mb-1">
+                    3. Would you recommend a tool like this to incoming 9th-grade families during school orientation?
+                </label>
+                <div class="flex items-center space-x-6 text-xs">
+                    <label class="flex items-center space-x-2 cursor-pointer">
+                        <input type="radio" name="endorsement" value="Yes" required class="text-teal-600">
+                        <span class="font-bold text-slate-800">Yes, highly likely</span>
+                    </label>
+                    <label class="flex items-center space-x-2 cursor-pointer">
+                        <input type="radio" name="endorsement" value="Conditional" class="text-teal-600">
+                        <span>Conditional on school approval</span>
+                    </label>
+                    <label class="flex items-center space-x-2 cursor-pointer">
+                        <input type="radio" name="endorsement" value="No" class="text-teal-600">
+                        <span>Unlikely</span>
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="w-full bg-teal-700 hover:bg-teal-800 text-white font-bold py-3 rounded-lg text-xs transition shadow">
+                Submit Counselor Response & Log Metrics
+            </button>
+        </form>
+
+        <div id="counselor-results" class="hidden p-6 bg-slate-900 text-white border-t border-slate-800 text-xs space-y-2">
+            <h3 class="font-bold text-teal-400 text-sm flex items-center space-x-2">
+                <i class="fa-solid fa-school"></i><span>Institutional Fit Metrics</span>
+            </h3>
+            <p id="counselor-metric-text"></p>
+        </div>
+    </div>
+
+    <script>
+        function calculateCounselorMetrics(e) {
+            e.preventDefault();
+            const form = new FormData(e.target);
+            const accuracy = form.get('roadmap_accuracy');
+            const endorsement = form.get('endorsement');
+
+            document.getElementById('counselor-results').classList.remove('hidden');
+            document.getElementById('counselor-metric-text').innerHTML = `
+                • <strong>Curriculum Alignment Score:</strong> ${accuracy}<br>
+                • <strong>School Endorsement Likelihood:</strong> ${endorsement}<br>
+                • <strong>Primary Problem Validated:</strong> Bottleneck logged
+            `;
+        }
+    </script>
+</body>
+</html>

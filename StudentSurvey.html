@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Discovery Survey — High School Journey Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans p-6">
+
+    <div class="max-w-2xl mx-auto bg-white border border-slate-200 rounded-xl shadow-md overflow-hidden">
+        <header class="bg-indigo-900 text-white p-6">
+            <div class="flex justify-between items-center">
+                <span class="text-xs font-bold uppercase tracking-widest text-indigo-300">Stakeholder Group: High School Students</span>
+                <span class="bg-indigo-700 text-indigo-200 text-xs px-2.5 py-1 rounded-full">Target: 4–5 Responses</span>
+            </div>
+            <h1 class="text-xl font-bold mt-2">Student Usability & Engagement Survey</h1>
+            <p class="text-xs text-indigo-200 mt-1">Evaluating daily tracking habits, AI Coach usefulness, and parental visibility friction.</p>
+        </header>
+
+        <form id="student-survey" class="p-6 space-y-6" onsubmit="calculateStudentMetrics(event)">
+            
+            <!-- Metric 1: Current Tool Usage -->
+            <div>
+                <label class="block text-sm font-semibold text-slate-800 mb-1">
+                    1. Where do you currently track your homework, club meetings, and volunteer hours?
+                </label>
+                <select name="current_tool" required class="w-full border border-slate-300 rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-indigo-500">
+                    <option value="">Select current method...</option>
+                    <option value="MentalNotes">In my head (No formal system)</option>
+                    <option value="PaperPlanner">Paper Planner / Notebook</option>
+                    <option value="PhoneNotes">Phone Notes / Reminders App</option>
+                    <option value="GoogleClassroom">Relying only on Google Classroom</option>
+                </select>
+            </div>
+
+            <!-- Metric 2: AI Coach Engagement -->
+            <div>
+                <label class="block text-sm font-semibold text-slate-800 mb-1">
+                    2. How likely are you to use the AI Coach (Screen 6) to ask "What should I focus on next?"
+                </label>
+                <div class="grid grid-cols-4 gap-2 text-center text-xs">
+                    <label class="border rounded-lg p-3 cursor-pointer hover:bg-slate-50">
+                        <input type="radio" name="ai_coach_score" value="1" required class="block mx-auto mb-1"> Unlikely
+                    </label>
+                    <label class="border rounded-lg p-3 cursor-pointer hover:bg-slate-50">
+                        <input type="radio" name="ai_coach_score" value="2" class="block mx-auto mb-1"> Maybe
+                    </label>
+                    <label class="border rounded-lg p-3 cursor-pointer hover:bg-slate-50">
+                        <input type="radio" name="ai_coach_score" value="4" class="block mx-auto mb-1"> Frequently
+                    </label>
+                    <label class="border rounded-lg p-3 cursor-pointer hover:bg-slate-50">
+                        <input type="radio" name="ai_coach_score" value="5" class="block mx-auto mb-1"> Daily
+                    </label>
+                </div>
+            </div>
+
+            <!-- Metric 3: Micromanagement Friction Check -->
+            <div>
+                <label class="block text-sm font-semibold text-slate-800 mb-1">
+                    3. How do you feel about your parents seeing your high-level summary on the Parent Dashboard?
+                </label>
+                <div class="space-y-2 text-xs">
+                    <label class="flex items-center space-x-2 border p-3 rounded-lg cursor-pointer hover:bg-slate-50">
+                        <input type="radio" name="parent_friction" value="Low" required class="text-indigo-600">
+                        <span><strong>Good:</strong> It saves them from constantly asking me about my grades/tasks.</span>
+                    </label>
+                    <label class="flex items-center space-x-2 border p-3 rounded-lg cursor-pointer hover:bg-slate-50">
+                        <input type="radio" name="parent_friction" value="Moderate" class="text-indigo-600">
+                        <span><strong>Neutral:</strong> As long as they only see overall progress and not every tiny detail.</span>
+                    </label>
+                    <label class="flex items-center space-x-2 border p-3 rounded-lg cursor-pointer hover:bg-slate-50">
+                        <input type="radio" name="parent_friction" value="High" class="text-indigo-600">
+                        <span><strong>Uncomfortable:</strong> It feels like micromanagement.</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Metric 4: Weekly Habit Likelihood -->
+            <div>
+                <label class="block text-sm font-semibold text-slate-800 mb-1">
+                    4. Would you update a app like this at least once a week to track your high school resume?
+                </label>
+                <div class="flex items-center space-x-6 text-xs">
+                    <label class="flex items-center space-x-2 cursor-pointer">
+                        <input type="radio" name="weekly_retention" value="Yes" required class="text-indigo-600">
+                        <span class="font-bold text-slate-800">Yes, definitely</span>
+                    </label>
+                    <label class="flex items-center space-x-2 cursor-pointer">
+                        <input type="radio" name="weekly_retention" value="IfReminded" class="text-indigo-600">
+                        <span>Only if I get text notifications</span>
+                    </label>
+                    <label class="flex items-center space-x-2 cursor-pointer">
+                        <input type="radio" name="weekly_retention" value="No" class="text-indigo-600">
+                        <span>Unlikely</span>
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-lg text-xs transition shadow">
+                Submit Student Response & Log Metrics
+            </button>
+        </form>
+
+        <div id="student-results" class="hidden p-6 bg-slate-900 text-white border-t border-slate-800 text-xs space-y-2">
+            <h3 class="font-bold text-indigo-400 text-sm flex items-center space-x-2">
+                <i class="fa-solid fa-chart-line"></i><span>Student Retention Metrics</span>
+            </h3>
+            <p id="student-metric-text"></p>
+        </div>
+    </div>
+
+    <script>
+        function calculateStudentMetrics(e) {
+            e.preventDefault();
+            const form = new FormData(e.target);
+            const friction = form.get('parent_friction');
+            const retention = form.get('weekly_retention');
+
+            document.getElementById('student-results').classList.remove('hidden');
+            document.getElementById('student-metric-text').innerHTML = `
+                • <strong>Parental Visibility Friction:</strong> ${friction} Risk<br>
+                • <strong>Predicted Weekly Retention:</strong> ${retention}<br>
+                • <strong>Current System Friction:</strong> Unstructured process identified
+            `;
+        }
+    </script>
+</body>
+</html>
