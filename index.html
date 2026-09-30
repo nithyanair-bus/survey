@@ -3,398 +3,425 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>High School Journey Platform — Stakeholder Discovery Survey</title>
+    <title>High School Journey Platform — Survey & Live Datastore</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons comment-->
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .active-tab-btn { background-color: #1e3a8a; color: #ffffff; border-bottom: 3px solid #60a5fa; }
-        .hidden-form { display: none !important; }
+        .hidden-element { display: none !important; }
     </style>
 </head>
 <body class="bg-slate-100 font-sans text-slate-800 antialiased p-4 md:p-8">
 
-    <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden">
+    <div class="max-w-4xl mx-auto space-y-8">
         
-        <!-- Header -->
-        <header class="bg-slate-900 text-white p-6 border-b border-slate-800">
-            <div class="flex items-center space-x-3 mb-2">
-                <i class="fa-solid fa-graduation-cap text-blue-400 text-2xl"></i>
-                <h1 class="text-xl font-bold">High School Journey Platform — Customer Discovery Survey</h1>
-            </div>
-            <p class="text-xs text-slate-400">
-                Evaluating feature resonance, task tracking friction, and pilot conversion across Parents, Students, and Academic Advisors.
-            </p>
-        </header>
-
-        <!-- Stakeholder Role Selection Tabs -->
-        <div class="flex border-b border-slate-200 bg-slate-50 text-xs font-bold text-slate-600">
-            <button id="tab-parent" onclick="switchSurvey('parent')" class="flex-1 py-3 px-4 text-center transition flex items-center justify-center space-x-2 active-tab-btn">
-                <i class="fa-solid fa-users"></i>
-                <span>1. Parents</span>
-            </button>
-            <button id="tab-student" onclick="switchSurvey('student')" class="flex-1 py-3 px-4 text-center transition flex items-center justify-center space-x-2 hover:text-slate-900">
-                <i class="fa-solid fa-user-graduate"></i>
-                <span>2. Students (Kids)</span>
-            </button>
-            <button id="tab-advisor" onclick="switchSurvey('advisor')" class="flex-1 py-3 px-4 text-center transition flex items-center justify-center space-x-2 hover:text-slate-900">
-                <i class="fa-solid fa-chalkboard-user"></i>
-                <span>3. Academic Advisors</span>
-            </button>
-        </div>
-
-        <div class="p-6">
-
-            <!-- ================= FORM 1: PARENTS ================= -->
-            <form id="form-parent" class="space-y-6" onsubmit="submitSurvey(event, 'parent')">
-                <div class="bg-blue-50 border-l-4 border-blue-600 p-3 rounded text-xs text-blue-900">
-                    <strong>Parent Objective:</strong> Evaluate Parent Dashboard utility, anxiety reduction, and willingness-to-pay.
+        <!-- Main Form Container -->
+        <div class="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden">
+            
+            <!-- Header -->
+            <header class="bg-slate-900 text-white p-6 border-b border-slate-800">
+                <div class="flex items-center space-x-3 mb-2">
+                    <i class="fa-solid fa-graduation-cap text-blue-400 text-2xl"></i>
+                    <h1 class="text-xl font-bold">High School Journey Platform — Stakeholder Survey</h1>
                 </div>
+                <p class="text-xs text-slate-400">
+                    Submit discovery responses below. All entries are captured live in the local datastore and rendered on the results dashboard.
+                </p>
+            </header>
 
-                <!-- Contact Capture -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 bg-slate-50 p-4 rounded-lg border border-slate-200">
-                    <div>
-                        <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">First Name *</label>
-                        <input type="text" name="first_name" required class="w-full border border-slate-300 rounded p-2 text-xs focus:ring-1 focus:ring-blue-500">
-                    </div>
-                    <div>
-                        <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Last Name *</label>
-                        <input type="text" name="last_name" required class="w-full border border-slate-300 rounded p-2 text-xs focus:ring-1 focus:ring-blue-500">
-                    </div>
-                    <div>
-                        <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Email Address *</label>
-                        <input type="email" name="email" required class="w-full border border-slate-300 rounded p-2 text-xs focus:ring-1 focus:ring-blue-500">
-                    </div>
-                </div>
-
-                <!-- Question 1 -->
-                <div>
-                    <label class="block text-xs font-semibold text-slate-800 mb-1">
-                        1. How do you currently track your child's academic deadlines, volunteer hours, and college prep milestones?
-                    </label>
-                    <select name="current_method" required class="w-full border border-slate-300 rounded p-2.5 text-xs focus:ring-1 focus:ring-blue-500">
-                        <option value="">Select current method...</option>
-                        <option value="Emails">Relying on school emails and newsletters</option>
-                        <option value="DirectCheckIns">Direct check-ins and asking my child</option>
-                        <option value="PersonalPlanner">Personal calendar or spreadsheet system</option>
-                        <option value="None">We do not currently have a structured tracking system</option>
-                    </select>
-                </div>
-
-                <!-- Question 2 -->
-                <div>
-                    <label class="block text-xs font-semibold text-slate-800 mb-1">
-                        2. How valuable is having high-level GPA, volunteer, and deadline visibility on the Parent Dashboard (Screen 7)?
-                    </label>
-                    <div class="grid grid-cols-4 gap-2 text-center text-xs">
-                        <label class="border rounded p-2.5 cursor-pointer hover:bg-slate-50">
-                            <input type="radio" name="parent_view_score" value="1" required class="block mx-auto mb-1"> Not Valuable
-                        </label>
-                        <label class="border rounded p-2.5 cursor-pointer hover:bg-slate-50">
-                            <input type="radio" name="parent_view_score" value="2" class="block mx-auto mb-1"> Somewhat
-                        </label>
-                        <label class="border rounded p-2.5 cursor-pointer hover:bg-slate-50">
-                            <input type="radio" name="parent_view_score" value="4" class="block mx-auto mb-1"> Very Helpful
-                        </label>
-                        <label class="border rounded p-2.5 cursor-pointer hover:bg-slate-50">
-                            <input type="radio" name="parent_view_score" value="5" class="block mx-auto mb-1"> Essential
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Question 3: WTP -->
-                <div>
-                    <label class="block text-xs font-semibold text-slate-800 mb-1">
-                        3. What would be a fair monthly price for this unified high school journey platform?
-                    </label>
-                    <div class="grid grid-cols-4 gap-2 text-center text-xs">
-                        <label class="border rounded p-2 cursor-pointer hover:bg-slate-50">
-                            <input type="radio" name="wtp" value="0" required class="block mx-auto mb-1"> $0 / month
-                        </label>
-                        <label class="border rounded p-2 cursor-pointer hover:bg-slate-50">
-                            <input type="radio" name="wtp" value="10" class="block mx-auto mb-1"> $10 / month
-                        </label>
-                        <label class="border rounded p-2 cursor-pointer hover:bg-slate-50">
-                            <input type="radio" name="wtp" value="25" class="block mx-auto mb-1"> $25 / month
-                        </label>
-                        <label class="border rounded p-2 cursor-pointer hover:bg-slate-50">
-                            <input type="radio" name="wtp" value="50" class="block mx-auto mb-1"> $50+ / month
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Question 4: Pilot Signup -->
-                <div class="bg-blue-50/60 p-4 rounded-lg border border-blue-200">
-                    <label class="block text-xs font-bold text-blue-900 mb-1">
-                        4. Would your family be open to joining our 2-week Concierge Pilot Cohort (Google Sheet + Weekly Digest)?
-                    </label>
-                    <div class="flex space-x-6 text-xs mt-2">
-                        <label class="flex items-center space-x-2 cursor-pointer">
-                            <input type="radio" name="pilot_signup" value="Yes" required class="text-blue-600">
-                            <span class="font-bold text-slate-800">Yes, sign us up!</span>
-                        </label>
-                        <label class="flex items-center space-x-2 cursor-pointer">
-                            <input type="radio" name="pilot_signup" value="Maybe" class="text-blue-600">
-                            <span>Maybe (Send details)</span>
-                        </label>
-                        <label class="flex items-center space-x-2 cursor-pointer">
-                            <input type="radio" name="pilot_signup" value="No" class="text-blue-600">
-                            <span>No thanks</span>
-                        </label>
-                    </div>
-                </div>
-
-                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg text-xs transition shadow">
-                    Submit Parent Survey & Record Metrics
+            <!-- Stakeholder Role Selection Tabs -->
+            <div class="flex border-b border-slate-200 bg-slate-50 text-xs font-bold text-slate-600">
+                <button id="tab-parent" onclick="switchSurvey('parent')" class="flex-1 py-3 px-4 text-center transition flex items-center justify-center space-x-2 active-tab-btn">
+                    <i class="fa-solid fa-users"></i>
+                    <span>1. Parents</span>
                 </button>
-            </form>
-
-
-            <!-- ================= FORM 2: STUDENTS (KIDS) ================= -->
-            <form id="form-student" class="space-y-6 hidden-form" onsubmit="submitSurvey(event, 'student')">
-                <div class="bg-indigo-50 border-l-4 border-indigo-600 p-3 rounded text-xs text-indigo-900">
-                    <strong>Student Objective:</strong> Test feature usability, AI Coach engagement, and parent visibility comfort.
-                </div>
-
-                <!-- Contact Capture -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 bg-slate-50 p-4 rounded-lg border border-slate-200">
-                    <div>
-                        <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">First Name *</label>
-                        <input type="text" name="first_name" required class="w-full border border-slate-300 rounded p-2 text-xs focus:ring-1 focus:ring-indigo-500">
-                    </div>
-                    <div>
-                        <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Last Name *</label>
-                        <input type="text" name="last_name" required class="w-full border border-slate-300 rounded p-2 text-xs focus:ring-1 focus:ring-indigo-500">
-                    </div>
-                    <div>
-                        <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Email Address *</label>
-                        <input type="email" name="email" required class="w-full border border-slate-300 rounded p-2 text-xs focus:ring-1 focus:ring-indigo-500">
-                    </div>
-                </div>
-
-                <!-- Question 1 -->
-                <div>
-                    <label class="block text-xs font-semibold text-slate-800 mb-1">
-                        1. What is the most confusing or stressful part about high school for you right now?
-                    </label>
-                    <select name="student_stressor" required class="w-full border border-slate-300 rounded p-2.5 text-xs focus:ring-1 focus:ring-indigo-500">
-                        <option value="">Select option...</option>
-                        <option value="TimeManagement">Balancing schoolwork with clubs and sports</option>
-                        <option value="CollegePrep">Knowing which extracurriculars look best for college</option>
-                        <option value="ResumeTracking">Remembering volunteer hours and achievements</option>
-                        <option value="TestPrep">Keeping up with standardized test prep (PSAT/SAT)</option>
-                    </select>
-                </div>
-
-                <!-- Question 2: AI Coach -->
-                <div>
-                    <label class="block text-xs font-semibold text-slate-800 mb-1">
-                        2. How likely are you to ask the AI Coach (Screen 6) questions like "What should I focus on next?"
-                    </label>
-                    <div class="grid grid-cols-4 gap-2 text-center text-xs">
-                        <label class="border rounded p-2.5 cursor-pointer hover:bg-slate-50">
-                            <input type="radio" name="ai_coach_usage" value="1" required class="block mx-auto mb-1"> Unlikely
-                        </label>
-                        <label class="border rounded p-2.5 cursor-pointer hover:bg-slate-50">
-                            <input type="radio" name="ai_coach_usage" value="2" class="block mx-auto mb-1"> Occasionally
-                        </label>
-                        <label class="border rounded p-2.5 cursor-pointer hover:bg-slate-50">
-                            <input type="radio" name="ai_coach_usage" value="4" class="block mx-auto mb-1"> Weekly
-                        </label>
-                        <label class="border rounded p-2.5 cursor-pointer hover:bg-slate-50">
-                            <input type="radio" name="ai_coach_usage" value="5" class="block mx-auto mb-1"> Daily
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Question 3: Parent Visibility -->
-                <div>
-                    <label class="block text-xs font-semibold text-slate-800 mb-1">
-                        3. How do you feel about your parents seeing your high-level progress on the Parent Dashboard?
-                    </label>
-                    <div class="space-y-2 text-xs">
-                        <label class="flex items-center space-x-2 border p-2.5 rounded cursor-pointer hover:bg-slate-50">
-                            <input type="radio" name="parent_visibility" value="Good" required class="text-indigo-600">
-                            <span><strong>Good:</strong> It saves them from constantly asking me for grade/task updates.</span>
-                        </label>
-                        <label class="flex items-center space-x-2 border p-2.5 rounded cursor-pointer hover:bg-slate-50">
-                            <input type="radio" name="parent_visibility" value="Neutral" class="text-indigo-600">
-                            <span><strong>Neutral:</strong> Fine as long as they only see overall milestone summaries.</span>
-                        </label>
-                        <label class="flex items-center space-x-2 border p-2.5 rounded cursor-pointer hover:bg-slate-50">
-                            <input type="radio" name="parent_visibility" value="Uncomfortable" class="text-indigo-600">
-                            <span><strong>Uncomfortable:</strong> Feels like micromanagement.</span>
-                        </label>
-                    </div>
-                </div>
-
-                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-lg text-xs transition shadow">
-                    Submit Student Survey & Record Metrics
+                <button id="tab-student" onclick="switchSurvey('student')" class="flex-1 py-3 px-4 text-center transition flex items-center justify-center space-x-2 hover:text-slate-900">
+                    <i class="fa-solid fa-user-graduate"></i>
+                    <span>2. Students (Kids)</span>
                 </button>
-            </form>
-
-
-            <!-- ================= FORM 3: ACADEMIC ADVISORS ================= -->
-            <form id="form-advisor" class="space-y-6 hidden-form" onsubmit="submitSurvey(event, 'advisor')">
-                <div class="bg-teal-50 border-l-4 border-teal-600 p-3 rounded text-xs text-teal-900">
-                    <strong>Advisor Objective:</strong> Validate curriculum alignment, caseload relief, and school recommendation fit.
-                </div>
-
-                <!-- Contact Capture -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 bg-slate-50 p-4 rounded-lg border border-slate-200">
-                    <div>
-                        <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">First Name *</label>
-                        <input type="text" name="first_name" required class="w-full border border-slate-300 rounded p-2 text-xs focus:ring-1 focus:ring-teal-500">
-                    </div>
-                    <div>
-                        <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Last Name *</label>
-                        <input type="text" name="last_name" required class="w-full border border-slate-300 rounded p-2 text-xs focus:ring-1 focus:ring-teal-500">
-                    </div>
-                    <div>
-                        <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Email Address *</label>
-                        <input type="email" name="email" required class="w-full border border-slate-300 rounded p-2 text-xs focus:ring-1 focus:ring-teal-500">
-                    </div>
-                </div>
-
-                <!-- Question 1 -->
-                <div>
-                    <label class="block text-xs font-semibold text-slate-800 mb-1">
-                        1. What is the biggest challenge you face when providing individual multi-year planning to students?
-                    </label>
-                    <select name="counseling_bottleneck" required class="w-full border border-slate-300 rounded p-2.5 text-xs focus:ring-1 focus:ring-teal-500">
-                        <option value="">Select main bottleneck...</option>
-                        <option value="HighCaseload">High student-to-counselor ratio (Inability to meet 1-on-1 frequently)</option>
-                        <option value="ParentAnxiety">Repetitive basic questions from anxious parents</option>
-                        <option value="LateStart">Students realizing GPA/extracurricular importance too late (Junior year)</option>
-                    </select>
-                </div>
-
-                <!-- Question 2: Roadmap Accuracy -->
-                <div>
-                    <label class="block text-xs font-semibold text-slate-800 mb-1">
-                        2. How accurately does the 4-Year Strategic Roadmap (Screen 2) reflect ideal high school progression?
-                    </label>
-                    <div class="grid grid-cols-4 gap-2 text-center text-xs">
-                        <label class="border rounded p-2.5 cursor-pointer hover:bg-slate-50">
-                            <input type="radio" name="roadmap_alignment" value="Needs Work" required class="block mx-auto mb-1"> Needs Work
-                        </label>
-                        <label class="border rounded p-2.5 cursor-pointer hover:bg-slate-50">
-                            <input type="radio" name="roadmap_alignment" value="Acceptable" class="block mx-auto mb-1"> Acceptable
-                        </label>
-                        <label class="border rounded p-2.5 cursor-pointer hover:bg-slate-50">
-                            <input type="radio" name="roadmap_alignment" value="Accurate" class="block mx-auto mb-1"> Accurate
-                        </label>
-                        <label class="border rounded p-2.5 cursor-pointer hover:bg-slate-50">
-                            <input type="radio" name="roadmap_alignment" value="Exceptional" class="block mx-auto mb-1"> Exceptional
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Question 3: School Endorsement -->
-                <div>
-                    <label class="block text-xs font-semibold text-slate-800 mb-1">
-                        3. Would you recommend this platform to incoming 9th-grade families during high school orientation?
-                    </label>
-                    <div class="flex space-x-6 text-xs mt-2">
-                        <label class="flex items-center space-x-2 cursor-pointer">
-                            <input type="radio" name="school_endorsement" value="Yes" required class="text-teal-600">
-                            <span class="font-bold text-slate-800">Yes, highly likely</span>
-                        </label>
-                        <label class="flex items-center space-x-2 cursor-pointer">
-                            <input type="radio" name="school_endorsement" value="Conditional" class="text-teal-600">
-                            <span>Conditional on district approval</span>
-                        </label>
-                        <label class="flex items-center space-x-2 cursor-pointer">
-                            <input type="radio" name="school_endorsement" value="No" class="text-teal-600">
-                            <span>Unlikely</span>
-                        </label>
-                    </div>
-                </div>
-
-                <button type="submit" class="w-full bg-teal-700 hover:bg-teal-800 text-white font-bold py-3 rounded-lg text-xs transition shadow">
-                    Submit Advisor Survey & Record Metrics
+                <button id="tab-advisor" onclick="switchSurvey('advisor')" class="flex-1 py-3 px-4 text-center transition flex items-center justify-center space-x-2 hover:text-slate-900">
+                    <i class="fa-solid fa-chalkboard-user"></i>
+                    <span>3. Academic Advisors</span>
                 </button>
-            </form>
-
-            <!-- Results Calculation Log -->
-            <div id="survey-results" class="hidden mt-6 p-4 bg-slate-900 text-white rounded-lg text-xs space-y-2">
-                <h3 class="font-bold text-blue-400 text-sm flex items-center space-x-2">
-                    <i class="fa-solid fa-circle-check text-emerald-400"></i>
-                    <span>Response Successfully Logged</span>
-                </h3>
-                <div id="result-summary-content" class="text-slate-300"></div>
             </div>
 
+            <div class="p-6">
+
+                <!-- ================= FORM 1: PARENTS ================= -->
+                <form id="form-parent" class="space-y-6" onsubmit="submitSurvey(event, 'parent')">
+                    <div class="bg-blue-50 border-l-4 border-blue-600 p-3 rounded text-xs text-blue-900">
+                        <strong>Parent Objective:</strong> Evaluate Parent Dashboard utility, anxiety reduction, and willingness-to-pay.
+                    </div>
+
+                    <!-- Contact Capture -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 bg-slate-50 p-4 rounded-lg border border-slate-200">
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">First Name *</label>
+                            <input type="text" name="first_name" required class="w-full border border-slate-300 rounded p-2 text-xs focus:ring-1 focus:ring-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Last Name *</label>
+                            <input type="text" name="last_name" required class="w-full border border-slate-300 rounded p-2 text-xs focus:ring-1 focus:ring-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Email Address *</label>
+                            <input type="email" name="email" required class="w-full border border-slate-300 rounded p-2 text-xs focus:ring-1 focus:ring-blue-500">
+                        </div>
+                    </div>
+
+                    <!-- Question 1 -->
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-800 mb-1">
+                            1. How do you currently track your child's academic deadlines, volunteer hours, and college prep milestones?
+                        </label>
+                        <select name="current_method" required class="w-full border border-slate-300 rounded p-2.5 text-xs focus:ring-1 focus:ring-blue-500">
+                            <option value="">Select current method...</option>
+                            <option value="School Emails">School Emails / Newsletters</option>
+                            <option value="Direct Check-ins">Asking Child Directly</option>
+                            <option value="Personal Planner">Personal Planner / Sheet</option>
+                            <option value="No System">No Structured System</option>
+                        </select>
+                    </div>
+
+                    <!-- Question 2: WTP -->
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-800 mb-1">
+                            2. What would be a fair monthly price for this unified high school journey platform?
+                        </label>
+                        <div class="grid grid-cols-4 gap-2 text-center text-xs">
+                            <label class="border rounded p-2 cursor-pointer hover:bg-slate-50">
+                                <input type="radio" name="wtp" value="$0/mo" required class="block mx-auto mb-1"> $0 / month
+                            </label>
+                            <label class="border rounded p-2 cursor-pointer hover:bg-slate-50">
+                                <input type="radio" name="wtp" value="$10/mo" class="block mx-auto mb-1"> $10 / month
+                            </label>
+                            <label class="border rounded p-2 cursor-pointer hover:bg-slate-50">
+                                <input type="radio" name="wtp" value="$25/mo" class="block mx-auto mb-1"> $25 / month
+                            </label>
+                            <label class="border rounded p-2 cursor-pointer hover:bg-slate-50">
+                                <input type="radio" name="wtp" value="$50+/mo" class="block mx-auto mb-1"> $50+ / month
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Question 3: Pilot Signup -->
+                    <div class="bg-blue-50/60 p-4 rounded-lg border border-blue-200">
+                        <label class="block text-xs font-bold text-blue-900 mb-1">
+                            3. Would your family be open to joining our 2-week Concierge Pilot Cohort (Google Sheet + Weekly Digest)?
+                        </label>
+                        <div class="flex space-x-6 text-xs mt-2">
+                            <label class="flex items-center space-x-2 cursor-pointer">
+                                <input type="radio" name="pilot_signup" value="Yes" required class="text-blue-600">
+                                <span class="font-bold text-slate-800">Yes, sign us up!</span>
+                            </label>
+                            <label class="flex items-center space-x-2 cursor-pointer">
+                                <input type="radio" name="pilot_signup" value="Maybe" class="text-blue-600">
+                                <span>Maybe</span>
+                            </label>
+                            <label class="flex items-center space-x-2 cursor-pointer">
+                                <input type="radio" name="pilot_signup" value="No" class="text-blue-600">
+                                <span>No thanks</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg text-xs transition shadow">
+                        Submit Parent Response & Save to Datastore
+                    </button>
+                </form>
+
+
+                <!-- ================= FORM 2: STUDENTS (KIDS) ================= -->
+                <form id="form-student" class="space-y-6 hidden-element" onsubmit="submitSurvey(event, 'student')">
+                    <div class="bg-indigo-50 border-l-4 border-indigo-600 p-3 rounded text-xs text-indigo-900">
+                        <strong>Student Objective:</strong> Test feature usability, AI Coach engagement, and parent visibility comfort.
+                    </div>
+
+                    <!-- Contact Capture -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 bg-slate-50 p-4 rounded-lg border border-slate-200">
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">First Name *</label>
+                            <input type="text" name="first_name" required class="w-full border border-slate-300 rounded p-2 text-xs focus:ring-1 focus:ring-indigo-500">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Last Name *</label>
+                            <input type="text" name="last_name" required class="w-full border border-slate-300 rounded p-2 text-xs focus:ring-1 focus:ring-indigo-500">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Email Address *</label>
+                            <input type="email" name="email" required class="w-full border border-slate-300 rounded p-2 text-xs focus:ring-1 focus:ring-indigo-500">
+                        </div>
+                    </div>
+
+                    <!-- Question 1 -->
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-800 mb-1">
+                            1. What is the most confusing or stressful part about high school for you right now?
+                        </label>
+                        <select name="student_stressor" required class="w-full border border-slate-300 rounded p-2.5 text-xs focus:ring-1 focus:ring-indigo-500">
+                            <option value="">Select option...</option>
+                            <option value="Time Management">Balancing schoolwork with clubs and sports</option>
+                            <option value="Extracurricular Strategy">Knowing which extracurriculars look best</option>
+                            <option value="Logging Hours">Remembering volunteer hours and achievements</option>
+                            <option value="Test Prep">Standardized test prep (PSAT/SAT)</option>
+                        </select>
+                    </div>
+
+                    <!-- Question 2: Parent Visibility -->
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-800 mb-1">
+                            2. How do you feel about your parents seeing your high-level progress on the Parent Dashboard?
+                        </label>
+                        <div class="space-y-2 text-xs">
+                            <label class="flex items-center space-x-2 border p-2.5 rounded cursor-pointer hover:bg-slate-50">
+                                <input type="radio" name="parent_visibility" value="Good (Low Friction)" required class="text-indigo-600">
+                                <span><strong>Good:</strong> Saves them from constantly asking me for updates.</span>
+                            </label>
+                            <label class="flex items-center space-x-2 border p-2.5 rounded cursor-pointer hover:bg-slate-50">
+                                <input type="radio" name="parent_visibility" value="Neutral" class="text-indigo-600">
+                                <span><strong>Neutral:</strong> Fine as long as they only see overall summaries.</span>
+                            </label>
+                            <label class="flex items-center space-x-2 border p-2.5 rounded cursor-pointer hover:bg-slate-50">
+                                <input type="radio" name="parent_visibility" value="Uncomfortable" class="text-indigo-600">
+                                <span><strong>Uncomfortable:</strong> Feels like micromanagement.</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-lg text-xs transition shadow">
+                        Submit Student Survey & Save to Datastore
+                    </button>
+                </form>
+
+
+                <!-- ================= FORM 3: ACADEMIC ADVISORS ================= -->
+                <form id="form-advisor" class="space-y-6 hidden-element" onsubmit="submitSurvey(event, 'advisor')">
+                    <div class="bg-teal-50 border-l-4 border-teal-600 p-3 rounded text-xs text-teal-900">
+                        <strong>Advisor Objective:</strong> Validate curriculum alignment, caseload relief, and school recommendation fit.
+                    </div>
+
+                    <!-- Contact Capture -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 bg-slate-50 p-4 rounded-lg border border-slate-200">
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">First Name *</label>
+                            <input type="text" name="first_name" required class="w-full border border-slate-300 rounded p-2 text-xs focus:ring-1 focus:ring-teal-500">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Last Name *</label>
+                            <input type="text" name="last_name" required class="w-full border border-slate-300 rounded p-2 text-xs focus:ring-1 focus:ring-teal-500">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Email Address *</label>
+                            <input type="email" name="email" required class="w-full border border-slate-300 rounded p-2 text-xs focus:ring-1 focus:ring-teal-500">
+                        </div>
+                    </div>
+
+                    <!-- Question 1: Roadmap Accuracy -->
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-800 mb-1">
+                            1. How accurately does the 4-Year Strategic Roadmap (Screen 2) reflect ideal high school progression?
+                        </label>
+                        <div class="grid grid-cols-4 gap-2 text-center text-xs">
+                            <label class="border rounded p-2.5 cursor-pointer hover:bg-slate-50">
+                                <input type="radio" name="roadmap_alignment" value="Needs Work" required class="block mx-auto mb-1"> Needs Work
+                            </label>
+                            <label class="border rounded p-2.5 cursor-pointer hover:bg-slate-50">
+                                <input type="radio" name="roadmap_alignment" value="Acceptable" class="block mx-auto mb-1"> Acceptable
+                            </label>
+                            <label class="border rounded p-2.5 cursor-pointer hover:bg-slate-50">
+                                <input type="radio" name="roadmap_alignment" value="Accurate" class="block mx-auto mb-1"> Accurate
+                            </label>
+                            <label class="border rounded p-2.5 cursor-pointer hover:bg-slate-50">
+                                <input type="radio" name="roadmap_alignment" value="Exceptional" class="block mx-auto mb-1"> Exceptional
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Question 2: School Endorsement -->
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-800 mb-1">
+                            2. Would you recommend this platform to incoming 9th-grade families during high school orientation?
+                        </label>
+                        <div class="flex space-x-6 text-xs mt-2">
+                            <label class="flex items-center space-x-2 cursor-pointer">
+                                <input type="radio" name="school_endorsement" value="Highly Likely" required class="text-teal-600">
+                                <span class="font-bold text-slate-800">Yes, highly likely</span>
+                            </label>
+                            <label class="flex items-center space-x-2 cursor-pointer">
+                                <input type="radio" name="school_endorsement" value="Conditional" class="text-teal-600">
+                                <span>Conditional on district approval</span>
+                            </label>
+                            <label class="flex items-center space-x-2 cursor-pointer">
+                                <input type="radio" name="school_endorsement" value="Unlikely" class="text-teal-600">
+                                <span>Unlikely</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full bg-teal-700 hover:bg-teal-800 text-white font-bold py-3 rounded-lg text-xs transition shadow">
+                        Submit Advisor Survey & Save to Datastore
+                    </button>
+                </form>
+
+            </div>
         </div>
+
+        <!-- ================= LIVE DATASTORE DISPLAY DASHBOARD SCREEN ================= -->
+        <section class="bg-slate-900 text-white rounded-xl shadow-lg p-6 border border-slate-800 space-y-4">
+            <div class="flex flex-wrap justify-between items-center border-b border-slate-800 pb-3">
+                <div class="flex items-center space-x-3">
+                    <i class="fa-solid fa-database text-emerald-400 text-xl"></i>
+                    <div>
+                        <h2 class="text-base font-bold">On-The-Fly Datastore Dashboard</h2>
+                        <p class="text-xs text-slate-400">Real-time captured stakeholder survey responses</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-3 mt-2 sm:mt-0">
+                    <span id="response-count-badge" class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs px-2.5 py-1 rounded-full font-bold">0 Entries Logged</span>
+                    <button onclick="clearDatastore()" class="bg-rose-600/30 hover:bg-rose-600 text-rose-200 text-xs px-3 py-1 rounded border border-rose-500/40 transition">Clear Store</button>
+                </div>
+            </div>
+
+            <!-- Table Display -->
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs text-slate-300">
+                    <thead class="bg-slate-950 text-slate-400 uppercase font-semibold text-[10px] border-b border-slate-800">
+                        <tr>
+                            <th class="p-2.5">Time Logged</th>
+                            <th class="p-2.5">Full Name</th>
+                            <th class="p-2.5">Email</th>
+                            <th class="p-2.5">Role</th>
+                            <th class="p-2.5">Key Metric / Signal Logged</th>
+                        </tr>
+                    </thead>
+                    <tbody id="datastore-table-body" class="divide-y divide-slate-800/60">
+                        <!-- Dynamic rows rendered here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
     </div>
 
+    <!-- On-The-Fly Datastore Script -->
     <script>
-        function switchSurvey(role) {
-            // Hide all forms
-            document.getElementById('form-parent').classList.add('hidden-form');
-            document.getElementById('form-student').classList.add('hidden-form');
-            document.getElementById('form-advisor').classList.add('hidden-form');
+        // Initialize On-The-Fly Datastore Array
+        let datastore = JSON.parse(localStorage.getItem('hs_journey_survey_db')) || [];
 
-            // Reset tab button states
+        // Render existing entries on page load
+        document.addEventListener('DOMContentLoaded', renderDatastoreScreen);
+
+        function switchSurvey(role) {
+            document.getElementById('form-parent').classList.add('hidden-element');
+            document.getElementById('form-student').classList.add('hidden-element');
+            document.getElementById('form-advisor').classList.add('hidden-element');
+
             document.getElementById('tab-parent').classList.remove('active-tab-btn');
             document.getElementById('tab-student').classList.remove('active-tab-btn');
             document.getElementById('tab-advisor').classList.remove('active-tab-btn');
 
-            // Hide previous results
-            document.getElementById('survey-results').classList.add('hidden');
-
-            // Show selected form and set tab active
             if (role === 'parent') {
-                document.getElementById('form-parent').classList.remove('hidden-form');
+                document.getElementById('form-parent').classList.remove('hidden-element');
                 document.getElementById('tab-parent').classList.add('active-tab-btn');
             } else if (role === 'student') {
-                document.getElementById('form-student').classList.remove('hidden-form');
+                document.getElementById('form-student').classList.remove('hidden-element');
                 document.getElementById('tab-student').classList.add('active-tab-btn');
             } else if (role === 'advisor') {
-                document.getElementById('form-advisor').classList.remove('hidden-form');
+                document.getElementById('form-advisor').classList.remove('hidden-element');
                 document.getElementById('tab-advisor').classList.add('active-tab-btn');
             }
         }
 
         function submitSurvey(e, role) {
             e.preventDefault();
-            const formData = new FormData(e.target);
-            const firstName = formData.get('first_name');
-            const lastName = formData.get('last_name');
-            const email = formData.get('email');
+            const form = e.target;
+            const formData = new FormData(form);
 
-            const resultsDiv = document.getElementById('survey-results');
-            const contentDiv = document.getElementById('result-summary-content');
+            const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const firstName = formData.get('first_name').trim();
+            const lastName = formData.get('last_name').trim();
+            const email = formData.get('email').trim();
 
-            let summaryHtml = `<p><strong>Respondent:</strong> ${firstName} ${lastName} (${email})</p>`;
+            let metricSummary = '';
 
             if (role === 'parent') {
                 const wtp = formData.get('wtp');
                 const pilot = formData.get('pilot_signup');
-                summaryHtml += `
-                    <p>• <strong>Role:</strong> Parent</p>
-                    <p>• <strong>Willingness to Pay (WTP):</strong> $${wtp}/month</p>
-                    <p>• <strong>Concierge Pilot Interest:</strong> ${pilot}</p>
-                `;
+                metricSummary = `WTP: ${wtp} | Pilot Signup: ${pilot}`;
             } else if (role === 'student') {
+                const stressor = formData.get('student_stressor');
                 const visibility = formData.get('parent_visibility');
-                summaryHtml += `
-                    <p>• <strong>Role:</strong> Student (Kid)</p>
-                    <p>• <strong>Parental Visibility Comfort:</strong> ${visibility}</p>
-                `;
+                metricSummary = `Top Friction: ${stressor} | Visibility: ${visibility}`;
             } else if (role === 'advisor') {
                 const alignment = formData.get('roadmap_alignment');
                 const endorsement = formData.get('school_endorsement');
-                summaryHtml += `
-                    <p>• <strong>Role:</strong> Academic Advisor</p>
-                    <p>• <strong>Curriculum Alignment Score:</strong> ${alignment}</p>
-                    <p>• <strong>Orientation Endorsement:</strong> ${endorsement}</p>
-                `;
+                metricSummary = `Roadmap Alignment: ${alignment} | Endorsement: ${endorsement}`;
             }
 
-            contentDiv.innerHTML = summaryHtml;
-            resultsDiv.classList.remove('hidden');
+            // Construct Response Record
+            const record = {
+                timestamp: timestamp,
+                fullName: `${firstName} ${lastName}`,
+                email: email,
+                role: role.toUpperCase(),
+                metricSummary: metricSummary
+            };
+
+            // Store On The Fly (Array + LocalStorage)
+            datastore.unshift(record);
+            localStorage.setItem('hs_journey_survey_db', JSON.stringify(datastore));
+
+            // Reset form inputs & refresh datastore screen
+            form.reset();
+            renderDatastoreScreen();
+            alert(`Response logged in datastore for ${firstName} ${lastName}!`);
+        }
+
+        function renderDatastoreScreen() {
+            const tableBody = document.getElementById('datastore-table-body');
+            const countBadge = document.getElementById('response-count-badge');
+
+            countBadge.textContent = `${datastore.length} Entries Logged`;
+
+            if (datastore.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="p-4 text-center text-slate-500 italic">
+                            No survey responses recorded in the datastore yet. Submit a form above to view live entries.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tableBody.innerHTML = datastore.map(item => `
+                <tr class="hover:bg-slate-800/40 transition">
+                    <td class="p-2.5 text-slate-400">${item.timestamp}</td>
+                    <td class="p-2.5 font-bold text-slate-200">${item.fullName}</td>
+                    <td class="p-2.5 text-blue-400">${item.email}</td>
+                    <td class="p-2.5">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold ${
+                            item.role === 'PARENT' ? 'bg-blue-900/60 text-blue-300 border border-blue-700' :
+                            item.role === 'STUDENT' ? 'bg-indigo-900/60 text-indigo-300 border border-indigo-700' :
+                            'bg-teal-900/60 text-teal-300 border border-teal-700'
+                        }">
+                            ${item.role}
+                        </span>
+                    </td>
+                    <td class="p-2.5 text-slate-300 font-mono text-[11px]">${item.metricSummary}</td>
+                </tr>
+            `).join('');
+        }
+
+        function clearDatastore() {
+            if (confirm("Are you sure you want to clear all logged survey responses from the datastore?")) {
+                datastore = [];
+                localStorage.removeItem('hs_journey_survey_db');
+                renderDatastoreScreen();
+            }
         }
     </script>
 </body>
